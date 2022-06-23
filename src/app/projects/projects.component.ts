@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '../project';
+import { PROJECTS } from '../mock-projects';
 
 @Component({
   selector: 'app-projects',
@@ -8,10 +9,7 @@ import { Project } from '../project';
 })
 export class ProjectsComponent implements OnInit {
 
-  project : Project = {
-    id: 1,
-    name: 'Water Sensor'
-  };
+  projects = PROJECTS;
 
 
   constructor() { }
