@@ -5,16 +5,17 @@ import { PROJECTS } from '../mock-projects';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-
   projects = PROJECTS;
+  selectedProject?: Project;
 
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  onSelect(project: Project): void {
+    this.selectedProject = project;
   }
-
 }
