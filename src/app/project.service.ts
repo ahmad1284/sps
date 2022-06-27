@@ -10,12 +10,18 @@ import { MessageService } from './message.service';
   providedIn: 'root',
 })
 export class ProjectService {
-  
+
   constructor(private messageService: MessageService) {}
 
   getProjects(): Observable<Project[]> {
     const projects = of(PROJECTS);
     this.messageService.add('ProjectService: fetched projects');
     return projects;
+  }
+
+  getProject(id: number): Observable<Project> {
+    const project = PROJECTS.find(p => p.id === id)!;
+    this.messageService.add(`ProjectService: fetched project id=${id}`)
+    return of(project);
   }
 }

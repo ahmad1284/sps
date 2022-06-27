@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../project';
 import { ProjectService } from '../project.service';
 import { MessageService } from '../message.service';
+import { Observable, of } from 'rxjs';
+import { PROJECTS } from '../mock-projects';
 
 @Component({
   selector: 'app-projects',
@@ -11,17 +13,11 @@ import { MessageService } from '../message.service';
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
-  selectedProject?: Project;
 
   constructor(private projectService: ProjectService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.getProjects();
-  }
-
-  onSelect(project: Project): void {
-    this.selectedProject = project;
-    this.messageService.add(`ProjectsComponent: Selected project id=${project.id}`);
   }
 
   getProjects(): void {
