@@ -33,4 +33,11 @@ ProjectDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    if (this.project) {
+      this.projectService.updateProject(this.project)
+      .subscribe(() => this.goBack);
+    }
+  }
 }

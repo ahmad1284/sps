@@ -6,5 +6,18 @@
       <span class="badge">{{ project.id }}</span>
       <span class="name">{{ project.name }}</span>
     </a>
+    <button type="button" class="delete" title="delete project"
+      (click)="delete(project)">x</button>
   </li>
 </ul>
+
+<div>
+  <label for="new-project">Project name: </label>
+  <input id="new-project" #projectName />
+
+    <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="add(projectName.value);
+  projectName.value=''">
+    Add project
+  </button>
+</div>

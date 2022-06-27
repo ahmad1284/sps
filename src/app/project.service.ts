@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Project } from './project';
 import { PROJECTS } from './mock-projects';
@@ -10,18 +13,73 @@ import { MessageService } from './message.service';
   providedIn: 'root',
 })
 export class ProjectService {
+  private projectsUrl = 'api/projects'; // URL to web api
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
+  /** GET projects from the server */
   getProjects(): Observable<Project[]> {
-    const projects = of(PROJECTS);
-    this.messageService.add('ProjectService: fetched projects');
-    return projects;
+    return this.http.get<Project[]>(this.projectsUrl)
+      .pipe(
+        tap(_ => this.log('fetched projects')),
+        catchError(this.handleError<Project[]>('getProjects', []))
+      );
   }
 
+  /**GET project by id. Will 404 if id not found */
   getProject(id: number): Observable<Project> {
-    const project = PROJECTS.find(p => p.id === id)!;
-    this.messageService.add(`ProjectService: fetched project id=${id}`)
-    return of(project);
+    const url = `${this.projectsUrl}/${id}`;
+    return this.http.get<Project>(url).pipe(
+      tap(_ => this.log(`fetched project id=${id}`)),
+      catchError(this.handleError<Project>(`getProject id=${id}`))
+    );
+  }
+
+  /** PUT: update the project on the server */
+  updateProject(project: Project): Observable<any> {
+    return this.http.put(this.projectsUrl, project, this.httpOptions).pipe(
+      tap(_ => this.log(`update project id=${project.id}`)),
+      catchError(this.handleError<any>(`updateProject`))
+    );
+  }
+
+  /** POST: add a new project to the server */
+  addProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.projectsUrl, project, this.httpOptions).pipe(
+      tap((newProject: Project) => this.log(`added project w/ id=${newProject.id}`)),
+      catchError(this.handleError<Project>('addProject'))
+    );
+  }
+
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   *
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    this.messageService.add(`ProjectService: ${message}`);
   }
 }
