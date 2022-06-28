@@ -8,18 +8,20 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MessagesComponent } from './messages/messages.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { MessagesComponent } from './messages/messages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProjectSearchComponent } from './project-search/project-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DashboardComponent,
+    MessagesComponent,
     ProjectsComponent,
     ProjectDetailComponent,
-    MessagesComponent,
-    DashboardComponent,
+    ProjectSearchComponent,
   ],
   imports: [
     AppRoutingModule,

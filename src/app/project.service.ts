@@ -67,8 +67,8 @@ export class ProjectService {
     );
   }
 
-  /* GET heroes whose name contains search term */
-  searchHeroes(term: string): Observable<Project[]> {
+  /* GET projects whose name contains search term */
+  searchProjects(term: string): Observable<Project[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of([]);
