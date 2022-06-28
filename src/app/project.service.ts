@@ -41,14 +41,6 @@ export class ProjectService {
     );
   }
 
-  /** PUT: update the project on the server */
-  updateProject(project: Project): Observable<any> {
-    return this.http.put(this.projectsUrl, project, this.httpOptions).pipe(
-      tap(_ => this.log(`update project id=${project.id}`)),
-      catchError(this.handleError<any>(`updateProject`))
-    );
-  }
-
   /** POST: add a new project to the server */
   addProject(project: Project): Observable<Project> {
     return this.http.post<Project>(this.projectsUrl, project, this.httpOptions).pipe(
@@ -57,6 +49,37 @@ export class ProjectService {
     );
   }
 
+  /** PUT: update the project on the server */
+  updateProject(project: Project): Observable<any> {
+    return this.http.put(this.projectsUrl, project, this.httpOptions).pipe(
+      tap(_ => this.log(`update project id=${project.id}`)),
+      catchError(this.handleError<any>(`updateProject`))
+    );
+  }
+
+  /** DELETE: delete the project from the server */
+  deleteProject(id: number): Observable<Project> {
+    const url = `${this.projectsUrl}/${id}`;
+
+    return this.http.delete<Project>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted project id=${id}`)),
+      catchError(this.handleError<Project>(`deleteProject`))
+    );
+  }
+
+  /* GET heroes whose name contains search term */
+  searchHeroes(term: string): Observable<Project[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Project[]>(`${this.projectsUrl}/?name=${term}`).pipe(
+      tap(x => x.length ?
+        this.log(`found projects matching "${term}"`) :
+        this.log(`no projects matching "${term}"`)),
+      catchError(this.handleError<Project[]>('searchProjects', []))
+    );
+  }
 
   /**
    * Handle Http operation that failed.

@@ -34,5 +34,8 @@ export class ProjectsComponent implements OnInit {
       });
   }
 
-  
+  delete(project: Project): void {
+    this.projects = this.projects.filter(p => p !== project);
+    this.projectService.deleteProject(project.id).subscribe();
+  }
 }
