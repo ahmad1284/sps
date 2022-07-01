@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://safe-stream-66889.herokuapp.com/api/v1/projects'
 };
 
 /*

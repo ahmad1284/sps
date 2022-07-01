@@ -8,14 +8,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from './project';
 import { PROJECTS } from './mock-projects';
 import { MessageService } from './message.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
   // URL to web api
-  private projectsUrl = environment.baseUrl
+  private projectsUrl = 'https://safe-stream-66889.herokuapp.com/api/v1/projects';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
