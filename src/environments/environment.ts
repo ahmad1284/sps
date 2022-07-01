@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/api/v1/projects'
+  baseUrl: 'https://safe-stream-66889.herokuapp.com/api/v1/projects'
 };
 
 /*
