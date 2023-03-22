@@ -14,7 +14,7 @@ import { MessageService } from './message.service';
 })
 export class ProjectService {
   // URL to web api
-  private projectsUrl = 'https://safe-stream-66889.herokuapp.com/api/v1/projects';
+  private projectsUrl = 'https://sps-be-production.up.railway.app/api/v1/projects';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
